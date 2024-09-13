@@ -1,0 +1,14 @@
+package baitap14thang3;
+
+public class tínhtudents {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		students x=new students();
+		x.setStudents("Triều", 19);
+		System.out.println("tên :"+x.getName());
+		System.out.println("tuổi :"+x.getAge());
+			}
+	}
+
+

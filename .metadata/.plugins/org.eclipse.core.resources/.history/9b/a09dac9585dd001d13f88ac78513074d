@@ -1,0 +1,7 @@
+package nha;
+
+public class daichi implements Cloneable {
+	String sonha;
+	
+
+}

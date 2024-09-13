@@ -1,0 +1,15 @@
+package trieu.dev.data.dao;
+import java.util.List;
+
+import trieu.dev.data.model.Category;
+
+public abstract class CategoryDao {
+	public abstract boolean insert(Category category);
+	public abstract boolean update(Category category);
+	public abstract boolean delete(int id);
+	public abstract Category find(int id);
+	public abstract List<Category> findAll();
+	public abstract List<Category> hotCategory();
+	
+
+}

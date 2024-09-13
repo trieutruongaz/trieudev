@@ -1,0 +1,3 @@
+module nha {
+	requires buoi4;
+}

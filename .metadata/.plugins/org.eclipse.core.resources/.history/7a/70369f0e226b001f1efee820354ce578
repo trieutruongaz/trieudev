@@ -1,0 +1,25 @@
+package trieu.dev.data.dao;
+
+public interface Databasedao {
+	 private static Databasedao instance;
+
+	    public static void init(Databasedao inst) {
+	        instance = inst;
+	    }
+
+	    public static Databasedao getInstance() {
+	        return instance;
+	    }
+
+	    public abstract Productdao getProductDao();
+
+	    public abstract Categoridao getCategoryDao();
+
+	    public abstract OrderItemdao getOrderItemDao();
+
+	    public abstract Orderdao getOrderDao();
+
+	    public abstract Userdao getUserDao();
+
+
+}

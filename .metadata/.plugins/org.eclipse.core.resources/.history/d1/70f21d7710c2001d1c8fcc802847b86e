@@ -1,0 +1,20 @@
+package baitap14thang3;
+
+public class tinhhinhchunhat {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		hinhchunhat x = new hinhchunhat();
+		x.setbankinh(5, 8);
+		System.out.println("chu vi hcn :"+(x.geta()+x.getb())*2);
+		System.out.print("dien tich hcn :"+(3.14*x.geta()*x.getb()));
+
+
+	}
+
+
+		
+		
+
+	}
+
+

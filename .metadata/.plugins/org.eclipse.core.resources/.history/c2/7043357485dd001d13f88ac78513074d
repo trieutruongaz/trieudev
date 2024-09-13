@@ -1,0 +1,15 @@
+package nha;
+
+import nha.daichi.sinhvien;
+
+public class management {
+
+	public static void main(String[] args) throws CloneNotSupportedException{
+		// TODO Auto-generated method stub
+		sinhvien x = new sinhvien("teo", new daichi("111","le loi"));
+		sinhvien y = x.clone();
+		
+
+	}
+
+}

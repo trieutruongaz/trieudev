@@ -1,0 +1,26 @@
+package baitap14thang3;
+
+public class hinhtamgiac {
+	private double a,b,c,p;
+	public double geta() {
+		return a;
+	}
+	public double getb() {
+		return b;
+		
+	}
+	public double getc() {
+		return c;
+	}
+	public double getp() {
+		return p=(a+b+c)/2;
+	}
+	public void setbankinh(double a, double b, double c,double p) {
+		this. a=a;
+		this.b=b;
+		this.c=c;
+	    this.p=p;
+		
+	}
+
+}

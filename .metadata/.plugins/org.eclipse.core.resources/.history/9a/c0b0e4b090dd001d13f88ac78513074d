@@ -1,0 +1,29 @@
+package diachi;
+
+import diachi.Diachi.sinhvien;
+
+public class management {
+	static String getObjectAddress(Object o) {
+		return "lop-"+o.getClass().getName()+";o nho -"+Integer.toHexString(o.hashCode());
+		
+	}
+
+	public static void main(String[] args) throws CloneNotSupportedException{
+		// TODO Auto-generated method stub
+		sinhvien x =new sinhvien("trieu", new Diachi("haibatrung","222"));
+		sinhvien y =x.clone();
+		System.out.println(x);
+		System.out.println(y);
+		System.out.println("x:"+ getObjectAddress(x));
+		System.out.println("x.diachi:"+getObjectAddress(x.diachi));
+		System.out.println("y:"+getObjectAddress(y));
+		System.out.println("y.diachi:"+ getObjectAddress(y.diachi));
+		x.ten="Ti";
+	}
+
+	private static sinhvien new sinhvien() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

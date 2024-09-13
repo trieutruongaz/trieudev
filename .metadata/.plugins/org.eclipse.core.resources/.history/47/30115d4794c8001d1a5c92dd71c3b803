@@ -1,0 +1,14 @@
+package mypackage.com;
+import mypackage.com.hamtoanhoc.*;
+public class management {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(hamtoanhoc.cb2(16));
+		System.out.println(hamtoanhoc.cd(12, 5));
+		System.out.println(hamtoanhoc.ct(12, 5));
+		System.out.println(hamtoanhoc.lt(12, 5));
+
+	}
+
+}

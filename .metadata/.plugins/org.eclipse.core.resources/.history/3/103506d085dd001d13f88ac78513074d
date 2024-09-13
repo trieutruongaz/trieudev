@@ -1,0 +1,26 @@
+package nha;
+
+public class diachi implements Cloneable {
+	String sonha;
+	String duongpho;
+	public void Diachi(String sonha1, String duongpho1) {
+		sonha=sonha1; duongpho=duongpho1;
+	}
+	public String toString() {
+		return sonha +"-"+duongpho;
+	}
+	public class sinhvien implements Cloneable{
+		String ten;
+		diachi  diachi;
+		public sinhvien(String ten1, diachi diachi1) {
+			ten = ten1; diachi=diachi1;
+		}
+		public sinhvien clone() throws CloneNotSupportedException{
+			return(sinhvien)super.clone();
+		}
+		public String toString() {
+			return "sinh vien ten:"+ten+",diachi:"+ diachi;
+		}
+	}
+
+}

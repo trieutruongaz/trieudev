@@ -1,0 +1,207 @@
+package trieu.dev.data.impl;
+
+import java.sql.Connection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import trieu.dev.data.drive.MySQLDrive;
+import trieu.dev.data.model.Order;
+
+public class OrderImpl {
+    Connection con = MySQLDrive.getInstance().getConnection();
+    private static final Logger logger = Logger.getLogger(OrderImpl.class.getName());
+
+    public boolean insert(Order order) {
+        String sql = "INSERT INTO ORDERS(ID, CODE, STATUS, USER_ID) VALUES(NULL, ?, ?, ?)";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, order.getCode());
+            stmt.setString(2, order.getStatus());
+            stmt.setInt(3, order.getUserId());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Insert order failed", e);
+        }
+        return false;
+    }
+
+    public boolean update(Order order) {
+        String sql = "UPDATE ORDERS SET code = ?, status = ?, user_id = ?, created_at = ? WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, order.getCode());
+            stmt.setString(2, order.getStatus());
+            stmt.setInt(3, order.getUserId());
+            stmt.setTimestamp(4, order.getCreatedAt());
+            stmt.setInt(5, order.getId());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Update order failed", e);
+        }
+        return false;
+    }
+
+    public boolean delete(int id) {
+        String sql = "DELETE FROM ORDERS WHERE ID = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Delete order failed", e);
+        }
+        return false;
+    }
+
+    public Order find(int id) {
+        String sql = "SELECT * FROM ORDERS WHERE ID = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String code = rs.getString("code");
+                    String status = rs.getString("status");
+                    int userId = rs.getInt("user_id");
+                    Timestamp created_at = rs.getTimestamp("created_at");
+
+                    return new Order(id, code, status, userId, created_at);
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Find order by id failed", e);
+        }
+        return null;
+    }
+
+    public List<Order> findAll() {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM ORDERS";
+        try (PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String code = rs.getString("code");
+                String status = rs.getString("status");
+                int userId = rs.getInt("user_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+
+                orders.add(new Order(id, code, status, userId, created_at));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Find all orders failed", e);
+        }
+        return orders;
+    }
+
+    public List<Order> findByUser(int userId) {
+        List<Order> orderList = new ArrayList<>();
+        String sql = "SELECT * FROM ORDERS WHERE user_id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String code = rs.getString("code");
+                    String status = rs.getString("status");
+                    Timestamp createdAt = rs.getTimestamp("created_at");
+
+                    orderList.add(new Order(id, code, status, userId, createdAt));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Find orders by user failed", e);
+        }
+        return orderList;
+    }
+
+    public List<Order> findByStatus(String status) {
+        List<Order> orderList = new ArrayList<>();
+        String sql = "SELECT * FROM ORDERS WHERE STATUS = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String code = rs.getString("code");
+                    int userId = rs.getInt("user_id");
+                    Timestamp createdAt = rs.getTimestamp("created_at");
+
+                    orderList.add(new Order(id, code, status, userId, createdAt));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Find orders by status failed", e);
+        }
+        return orderList;
+    }
+
+    public Order findByCode(String code) {
+        String sql = "SELECT * FROM ORDERS WHERE CODE= ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, code);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String status = rs.getString("status");
+                    int userId = rs.getInt("user_id");
+                    Timestamp createdAt = rs.getTimestamp("created_at");
+
+                    return new Order(id, code, status, userId, createdAt);
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Find order by code failed", e);
+        }
+        return null;
+    }
+
+    public int countOrderByDay(String date) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM orders WHERE date(created_at) = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, date);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("count");
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Count orders by day failed", e);
+        }
+        return count;
+    }
+
+    public double earningOrderByDay(String date) {
+        double total = 0;
+        String sql = "SELECT * FROM orders WHERE date(created_at) = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, date);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Here we need to compute the total based on the specific method to get the order total
+                    // e.g., total += rs.getDouble("order_total"); if there is an order total field
+                    // Assuming a method getTotal in the Order model class:
+                    int id = rs.getInt("id");
+                    String code = rs.getString("code");
+                    String status = rs.getString("status");
+                    int userId = rs.getInt("user_id");
+                    Timestamp createdAt = rs.getTimestamp("created_at");
+
+                    Order order = new Order(id, code, status, userId, createdAt);
+                    total += order.getTotal();  // Assuming getTotal method exists
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Earning by day calculation failed", e);
+        }
+        return total;
+    }
+}

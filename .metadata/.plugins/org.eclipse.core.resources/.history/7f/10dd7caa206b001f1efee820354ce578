@@ -1,0 +1,5 @@
+package trieu.dev.data.dao;
+
+public interface Categoridao {
+
+}

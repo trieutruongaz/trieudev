@@ -1,0 +1,8 @@
+package mypackage.com;
+
+public class hamtoanhoc {
+	public static double cb2(double a) {
+		return Math.sqrt(a);
+	}
+
+}

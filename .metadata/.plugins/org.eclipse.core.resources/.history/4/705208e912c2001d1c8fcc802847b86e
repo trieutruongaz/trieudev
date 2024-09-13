@@ -1,0 +1,19 @@
+package baitap14thang3;
+
+public class students {
+	private String name;
+	private int age;
+
+	public void setStuden(String name, int age) {
+		this.name=name;
+		this.age=age;
+	}
+	  public String getName() {
+		  return name;
+	  }
+	  public int getAge() {
+		  return age;
+	  }
+	}
+
+

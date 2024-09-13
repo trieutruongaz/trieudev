@@ -1,0 +1,8 @@
+package trieu.dev.util;
+
+public class Snippet {
+	public static void main(String[] args) {
+		import java.util.List;
+	}
+}
+

@@ -1,0 +1,13 @@
+package baitap14thang3;
+
+public class tinhtamgiac {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		hinhtamgiac x= new hinhtamgiac();
+		x.setbankinh(12, 5, 10);
+		System.out.println("chu vi hinhtam giac"+(x.geta()+x.getb()+x.getc()));
+		System.out.println("dien tich hinh tam giac"+Math.sqrt(x.getp()*(x.getp()-x.geta()*(x.getp()-x.getb())*(x.getp()-x.getc()))));
+	}
+
+}
